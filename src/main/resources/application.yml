@@ -1,0 +1,52 @@
+quarkus:
+  http:
+    port: 8080
+    auth:
+      permission:
+        authenticated:
+          paths: /api/authenticated/*
+          policy: authenticated
+  smallrye-jwt:
+    auth-mechanism: MP-JWT
+  native:
+    resources:
+      includes: publicKey.pem
+  datasource:
+    db-kind: postgresql
+    username: ${JDBC_USER:dompetly_user}
+    password: ${JDBC_PASSWORD:P@ssw0rd123}
+    jdbc:
+      url: 'jdbc:postgresql://localhost:5432/dompetly_db'
+      enable-metrics: true
+    metrics:
+      enabled: true
+  hibernate-orm:
+    database:
+      generation: none
+    log:
+      sql: true
+  smallrye-openapi:
+    enable: true
+    info-title: "Dompetly API"
+    info-version: 1.0.0
+    info-description: "This is a API service for Dompetly Finances App"
+    info-contact-email: lukmann.dev@gmail.com
+    info-contact-name: Dompetly Support
+    info-license-name: Apache 2.0
+    info-license-url: https://www.apache.org/licenses/LICENSE-2.0.html
+  swagger-ui:
+    enable: true
+    always-include: true
+
+smallrye:
+  jwt:
+    sign:
+      key:
+        location: tlUI81gJABk0lGylkQYtV15Pl3iAmDEV
+
+mp:
+  jwt:
+    verify:
+      issuer: https://dompetly.lukmann.dev
+      publickey:
+        location: publicKey.pem
