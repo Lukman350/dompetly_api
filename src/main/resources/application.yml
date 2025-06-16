@@ -6,11 +6,6 @@ quarkus:
         authenticated:
           paths: /api/authenticated/*
           policy: authenticated
-  smallrye-jwt:
-    auth-mechanism: MP-JWT
-  native:
-    resources:
-      includes: publicKey.pem
   datasource:
     db-kind: postgresql
     username: ${JDBC_USER:dompetly_user}
@@ -24,7 +19,7 @@ quarkus:
     database:
       generation: none
     log:
-      sql: true
+      sql: false
   smallrye-openapi:
     enable: true
     info-title: "Dompetly API"
@@ -37,16 +32,17 @@ quarkus:
   swagger-ui:
     enable: true
     always-include: true
-
-smallrye:
-  jwt:
-    sign:
-      key:
-        location: tlUI81gJABk0lGylkQYtV15Pl3iAmDEV
+  smallrye-jwt:
+    auth-mechanism: MP-JWT
+  smallrye:
+    jwt:
+      sign:
+        key: vYpTUwfoXuy2bQ5Dqy8nVOB9CzvZFQndgi4h3vbr
 
 mp:
   jwt:
     verify:
-      issuer: https://dompetly.lukmann.dev
-      publickey:
-        location: publicKey.pem
+      issuer: Dompetly App
+    signer:
+      key: vYpTUwfoXuy2bQ5Dqy8nVOB9CzvZFQndgi4h3vbr/UI=
+      alg: HS256
