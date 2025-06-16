@@ -1,32 +1,35 @@
 package dev.lukmann.user.dto;
 
-import dev.lukmann.annotations.PasswordMatches;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import dev.lukmann.user.domain.User;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Base64;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@PasswordMatches(message = "Password confirmation doesn't match")
+@Builder
 public class UserDto {
-
-    @NotBlank(message = "Username field is required")
-    @Size(min = 4, message = "Username field must be at least 4 characters long")
+    private UUID id;
     private String username;
-
-    @NotBlank(message = "Email field is required")
-    @Email(message = "Email field is not an valid email")
     private String email;
+    private String photoProfile;
+    private String pin;
+    private String token;
 
-    @NotBlank(message = "Password field is required")
-    @Size(min = 6, message = "Password field must be at least 6 characters long")
-    private String password;
+    public static UserDto fromDomain(User user) {
+        return UserDto.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .photoProfile(user.getPhotoProfile())
+                .pin(user.getPin() != null ? Base64.getEncoder().encodeToString(user.getPin().toString().getBytes()) : null)
+                .token(user.getToken())
+                .build();
 
-    @NotBlank(message = "Confirm Password field is required")
-    private String confirmPassword;
-
+    }
 }
