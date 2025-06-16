@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class ServicesException extends Exception {
+public class ServicesException extends RuntimeException {
     private Response.Status status;
     private String message;
 
