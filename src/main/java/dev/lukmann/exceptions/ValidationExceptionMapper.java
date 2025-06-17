@@ -25,7 +25,7 @@ public class ValidationExceptionMapper implements ExceptionMapper<ConstraintViol
                 .entity(Map.of(
                         "success", false,
                         "message", "Validation Failed",
-                        "violations", errors
+                        "errors", errors
                 ))
                 .build();
     }

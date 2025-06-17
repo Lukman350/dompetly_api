@@ -1,18 +1,18 @@
 package dev.lukmann.annotations;
 
-import dev.lukmann.user.dto.UserDto;
+import dev.lukmann.auth.dto.RegisterDto;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
-public class PasswordMatchesValidator implements ConstraintValidator<PasswordMatches, UserDto> {
+public class PasswordMatchesValidator implements ConstraintValidator<PasswordMatches, RegisterDto> {
 
     @Override
-    public boolean isValid(UserDto userDto, ConstraintValidatorContext constraintValidatorContext) {
-        if (userDto.getPassword() == null || userDto.getConfirmPassword() == null) {
+    public boolean isValid(RegisterDto registerDto, ConstraintValidatorContext constraintValidatorContext) {
+        if (registerDto.getPassword() == null || registerDto.getConfirmPassword() == null) {
             return false;
         }
 
-        return userDto.getPassword().equals(userDto.getConfirmPassword());
+        return registerDto.getPassword().equals(registerDto.getConfirmPassword());
     }
 }
 
