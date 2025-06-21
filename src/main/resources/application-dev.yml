@@ -1,0 +1,7 @@
+mp:
+  jwt:
+    verify:
+      algorithm: HS256
+      secret: vYpTUwfoXuy2bQ5Dqy8nVOB9CzvZFQndgi4h3vbr/UI=
+      issuer: Dompetly App
+      publickey.location: none
