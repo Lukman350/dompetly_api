@@ -1,0 +1,74 @@
+name: Build and Deploy Quarkus App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Build Quarkus App
+        run: ./mvnw clean package -DskipTests -Dquarkus.profile=prod
+
+      - name: Build Docker Image
+        run: docker build -f src/main/docker/Dockerfile.jvm -t dompetly_be .
+
+      - name: Save Docker Image to Tar
+        run: docker save -o dompetly_be.tar dompetly_be
+
+      - name: Copy Docker Image to VPS
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          source: dompetly_be.tar
+          target: /home/${{ secrets.VPS_USER }}/project/dompetly_be
+
+      - name: SSH and Deploy App
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            set -e
+            APP_PATH="/home/${{ secrets.VPS_USER }}/project/dompetly_be"
+            cd $APP_PATH
+
+            echo "🔐 Generate JWT keys if not present"
+            mkdir -p jwt
+            if [ ! -f jwt/privateKey.pem ]; then
+              openssl genpkey -algorithm RSA -out jwt/privateKey.pem -pkeyopt rsa_keygen_bits:2048
+            fi
+            if [ ! -f jwt/publicKey.pem ]; then
+              openssl rsa -pubout -in jwt/privateKey.pem -out jwt/publicKey.pem
+            fi
+
+            echo "🧹 Stop and remove existing container if exists"
+            docker rm -f dompetly_be || true
+
+            echo "📦 Load Docker image"
+            docker load -i dompetly_be.tar
+
+            echo "🚀 Run container as 'dompetly_be'"
+            docker run -d \
+              --name dompetly_be \
+              -v $APP_PATH/jwt/privateKey.pem:/app/resources/jwt/privateKey.pem \
+              -v $APP_PATH/jwt/publicKey.pem:/app/resources/jwt/publicKey.pem \
+              -e JDBC_USER=${{ secrets.DB_USER }} \
+              -e JDBC_PASSWORD=${{ secrets.DB_PASSWORD }} \
+              -p 8080:8080 \
+              dompetly_be

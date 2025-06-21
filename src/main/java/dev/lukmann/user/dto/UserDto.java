@@ -20,6 +20,8 @@ public class UserDto {
     private String photoProfile;
     private String pin;
     private String token;
+    private String firebaseUid;
+    private String firebaseAccountType;
 
     public static UserDto fromDomain(User user) {
         return UserDto.builder()
@@ -29,7 +31,8 @@ public class UserDto {
                 .photoProfile(user.getPhotoProfile())
                 .pin(user.getPin() != null ? Base64.getEncoder().encodeToString(user.getPin().toString().getBytes()) : null)
                 .token(user.getToken())
+                .firebaseUid(user.getFirebaseUid())
+                .firebaseAccountType(user.getFirebaseAccountType() != null ? user.getFirebaseAccountType().toLowerCase() : null)
                 .build();
-
     }
 }

@@ -1,4 +1,5 @@
 quarkus:
+  profile: dev
   http:
     port: 8080
     auth:
@@ -6,6 +7,9 @@ quarkus:
         authenticated:
           paths: /api/authenticated/*
           policy: authenticated
+        public:
+          paths: /api/auth/*
+          policy: permit
   datasource:
     db-kind: postgresql
     username: ${JDBC_USER:dompetly_user}
@@ -32,17 +36,7 @@ quarkus:
   swagger-ui:
     enable: true
     always-include: true
-  smallrye-jwt:
-    auth-mechanism: MP-JWT
-  smallrye:
-    jwt:
-      sign:
-        key: vYpTUwfoXuy2bQ5Dqy8nVOB9CzvZFQndgi4h3vbr
-
-mp:
-  jwt:
-    verify:
-      issuer: Dompetly App
-    signer:
-      key: vYpTUwfoXuy2bQ5Dqy8nVOB9CzvZFQndgi4h3vbr/UI=
-      alg: HS256
+  log:
+    category:
+      io.quarkus.security: DEBUG
+      io.smallrye.jwt: DEBUG

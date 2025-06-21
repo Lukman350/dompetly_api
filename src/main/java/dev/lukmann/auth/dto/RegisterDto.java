@@ -12,6 +12,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RegisterDto {
 
+    private String firebaseUid;
+    private String photoProfile;
+    private String firebaseAccountType;
+
     @NotBlank(message = "Username field is required")
     @Size(min = 4, message = "Username field must be at least 4 characters long")
     private String username;
