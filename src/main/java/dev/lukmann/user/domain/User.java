@@ -24,7 +24,7 @@ public class User extends PanacheEntityBase {
     private UUID id;
 
     @NotNull
-    @Column(length = 30, nullable = false, unique = true)
+    @Column(length = 30, nullable = false)
     private String username;
 
     @NotNull
@@ -32,10 +32,10 @@ public class User extends PanacheEntityBase {
     private String password;
 
     @NotNull
-    @Column(length = 50, nullable = false, unique = true)
+    @Column(length = 50, nullable = false)
     private String email;
 
-    @Column(name = "photo_profile", length = 50)
+    @Column(name = "photo_profile")
     private String photoProfile;
 
     @Column(name = "pin")
@@ -43,6 +43,14 @@ public class User extends PanacheEntityBase {
 
     @Column(name = "token")
     private String token;
+
+    @NotNull
+    @Column(name = "firebase_uid", length = 50, unique = true)
+    private String firebaseUid;
+
+    @NotNull
+    @Column(name = "firebase_account_type", length = 10, nullable = false)
+    private String firebaseAccountType;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;

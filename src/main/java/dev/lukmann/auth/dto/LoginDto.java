@@ -10,9 +10,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoginDto {
+    private String firebaseUid;
+    private String firebaseAccountType;
+
     @NotBlank(message = "Email field is required")
     @Email(message = "Email field must be an valid email address")
     public String email;
-    @NotBlank(message = "Password field is required")
+
     public String password;
 }

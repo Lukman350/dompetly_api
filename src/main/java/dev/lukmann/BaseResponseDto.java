@@ -13,4 +13,9 @@ public class BaseResponseDto<T> {
     private T data;
     private String message;
 
+    public BaseResponseDto(Boolean success, String message) {
+        this.success = success;
+        this.message = message;
+    }
+
 }

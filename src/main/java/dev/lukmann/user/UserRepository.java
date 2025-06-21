@@ -17,4 +17,8 @@ public class UserRepository implements PanacheRepositoryBase<User, UUID> {
         return find("email", email).firstResult();
     }
 
+    public User findByFirebaseUid(String firebaseUid) {
+        return find("firebaseUid", firebaseUid).firstResult();
+    }
+
 }
