@@ -20,7 +20,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Build Quarkus App
-        run: ./mvnw clean package -DskipTests
+        run: ./mvnw clean package -DskipTests -Dquarkus.profile=prod
 
       - name: Build Docker Image
         run: docker build -f src/main/docker/Dockerfile.jvm -t dompetly_be .
