@@ -1,8 +1,13 @@
+quarkus:
+  datasource:
+    jdbc:
+      url: jdbc:postgresql://${DB_HOST:localhost}:5432/${DB_NAME:dompetly_db}
+
 mp:
   jwt:
     verify:
       publickey:
-        location: jwt/publicKey.pem
+        location: classpath:jwt/publicKey.pem
       algorithm: RS256
     issuer: Dompetly App
 
@@ -10,6 +15,6 @@ smallrye:
   jwt:
     sign:
       key:
-        location: jwt/privateKey.pem
+        location: classpath:jwt/privateKey.pem
       key-format: PEM
       algorithm: RS256
