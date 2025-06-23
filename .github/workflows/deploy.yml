@@ -19,6 +19,24 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
+      - name: Generate JWT Keys
+        run: |
+          JWT_PATH=src/main/resources/jwt
+          mkdir -p $JWT_PATH
+          
+          echo "🔐 Generating privateKey.pem and publicKey.pem"
+          
+          if [ ! -f $JWT_PATH/privateKey.pem ]; then
+            openssl genrsa -out $JWT_PATH/privateKey-pkcs1.pem 2048
+            openssl pkcs8 -topk8 -inform PEM -outform PEM \
+              -in $JWT_PATH/privateKey-pkcs1.pem -out $JWT_PATH/privateKey.pem -nocrypt
+            rm $JWT_PATH/privateKey-pkcs1.pem
+          fi
+          
+          if [ ! -f $JWT_PATH/publicKey.pem ]; then
+            openssl rsa -in $JWT_PATH/privateKey.pem -pubout -out $JWT_PATH/publicKey.pem
+          fi
+
       - name: Build Quarkus App
         run: |
           chmod +x ./mvnw
@@ -42,24 +60,7 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
             set -e
-            APP_PATH="/home/${{ secrets.VPS_USER }}/project/dompetly_api"
-            JWT_PATH="$APP_PATH/src/main/resources/jwt"
-
-            cd $APP_PATH
-
-            echo "🔐 Generate JWT keys in correct format (PKCS#8)"
-            mkdir -p $JWT_PATH
-            if [ ! -f $JWT_PATH/privateKey.pem ]; then
-              openssl genrsa -out $JWT_PATH/privateKey-pkcs1.pem 2048
-              openssl pkcs8 -topk8 -inform PEM -outform PEM \
-                -in $JWT_PATH/privateKey-pkcs1.pem -out $JWT_PATH/privateKey.pem -nocrypt
-              rm $JWT_PATH/privateKey-pkcs1.pem
-            fi
-            if [ ! -f $JWT_PATH/publicKey.pem ]; then
-              openssl rsa -in $JWT_PATH/privateKey.pem -pubout -out $JWT_PATH/publicKey.pem
-            fi
-
-            echo "Restarting service"
+            echo "Restarting service on VPS..."
             sudo -S /usr/bin/systemctl stop dompetly_api || true
             sudo -S /usr/bin/systemctl start dompetly_api
-            echo "Service restarted successfully"
+            echo "✅ Service restarted successfully"
