@@ -51,13 +51,18 @@ jobs:
             APP_PATH="/home/${{ secrets.VPS_USER }}/project/dompetly_be"
             cd $APP_PATH
 
-            echo "🔐 Generate JWT keys if not present"
+            echo "🔐 Generate JWT keys in correct format (PKCS#8)"
             mkdir -p jwt
             if [ ! -f jwt/privateKey.pem ]; then
-              openssl genpkey -algorithm RSA -out jwt/privateKey.pem -pkeyopt rsa_keygen_bits:2048
+              echo "➡️ Creating RSA key (PKCS#8)"
+              openssl genrsa -out jwt/privateKey-pkcs1.pem 2048
+              openssl pkcs8 -topk8 -inform PEM -outform PEM \
+                -in jwt/privateKey-pkcs1.pem -out jwt/privateKey.pem -nocrypt
+              rm jwt/privateKey-pkcs1.pem
             fi
             if [ ! -f jwt/publicKey.pem ]; then
-              openssl rsa -pubout -in jwt/privateKey.pem -out jwt/publicKey.pem
+              echo "➡️ Extracting public key"
+              openssl rsa -in jwt/privateKey.pem -pubout -out jwt/publicKey.pem
             fi
 
             echo "🧹 Stop and remove existing container if exists"
