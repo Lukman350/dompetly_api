@@ -2,7 +2,7 @@
 
 APP_NAME="dompetly_api"
 APP_PATH="/home/lukman/project/dompetly_api"
-JAR_PATH="$APP_PATH/target/quarkus-app/quarkus-run.jar"
+JAR_PATH="$APP_PATH/quarkus-run.jar"
 PID_FILE="/tmp/$APP_NAME.pid"
 LOG_FILE="$APP_PATH/app.log"
 JAVA_PATH="/home/lukman/.sdkman/candidates/java/current/bin/java"
