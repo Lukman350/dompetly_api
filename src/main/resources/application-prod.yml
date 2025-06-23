@@ -7,7 +7,7 @@ mp:
   jwt:
     verify:
       publickey:
-        location: jwt/publicKey.pem
+        location: classpath:jwt/publicKey.pem
       algorithm: RS256
     issuer: Dompetly App
 
@@ -15,6 +15,6 @@ smallrye:
   jwt:
     sign:
       key:
-        location: jwt/privateKey.pem
+        location: classpath:jwt/privateKey.pem
       key-format: PEM
       algorithm: RS256
