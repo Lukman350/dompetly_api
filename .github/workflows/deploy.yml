@@ -60,6 +60,6 @@ jobs:
             fi
 
             echo "Restarting service"
-            sudo systemctl stop dompetly_api || true
-            sudo systemctl start dompetly_api
+            sudo -S /usr/bin/systemctl stop dompetly_api || true
+            sudo -S /usr/bin/systemctl start dompetly_api
             echo "Service restarted successfully"
