@@ -36,7 +36,3 @@ quarkus:
   swagger-ui:
     enable: true
     always-include: true
-  log:
-    category:
-      io.quarkus.security: DEBUG
-      io.smallrye.jwt: DEBUG
