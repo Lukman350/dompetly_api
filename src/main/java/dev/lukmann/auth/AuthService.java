@@ -84,6 +84,7 @@ public class AuthService {
         }
 
         String token = Jwt.subject(found.getId().toString())
+                .upn(found.getId().toString())
                 .groups(Set.of("user"))
                 .claim("userId", found.getId().toString())
                 .claim("username", found.getUsername())
