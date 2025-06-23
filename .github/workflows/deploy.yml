@@ -69,8 +69,8 @@ jobs:
             echo "🚀 Run container as 'dompetly_be'"
             docker run -d \
               --name dompetly_be \
-              -v $APP_PATH/jwt/privateKey.pem:/app/resources/jwt/privateKey.pem \
-              -v $APP_PATH/jwt/publicKey.pem:/app/resources/jwt/publicKey.pem \
+              -v $APP_PATH/jwt/privateKey.pem:/deployments/resources/privateKey.pem \
+              -v $APP_PATH/jwt/publicKey.pem:/deployments/resources/publicKey.pem \
               -e JDBC_USER=${{ secrets.DB_USER }} \
               -e JDBC_PASSWORD=${{ secrets.DB_PASSWORD }} \
               -e DB_HOST=${{ secrets.DB_HOST }} \
