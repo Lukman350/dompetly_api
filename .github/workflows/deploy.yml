@@ -51,6 +51,8 @@ jobs:
             chmod 600 jwt_keys/privateKey.pem # Restrict permissions
             chmod 644 jwt_keys/publicKey.pem # Restrict permissions
             
+            sudo chown -R 1000:1000 /home/${{ secrets.VPS_USER }}/project/dompetly_api/jwt_keys
+            
             echo "Pulling latest Docker image..."
             docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE_NAME }}:latest
             
