@@ -8,14 +8,14 @@ mp:
   jwt:
     verify:
       publickey:
-        location: file:/etc/dompetly_api/jwt/publicKey.pem
+        location: jwt/publicKey.pem
       algorithm: RS256
-    issuer: Dompetly App
+    issuer: https://dompetly.lukmann.dev
 
 smallrye:
   jwt:
     sign:
       key:
-        location: file:/etc/dompetly_api/jwt/privateKey.pem
+        location: jwt/privateKey.pem
       key-format: PEM
       algorithm: RS256

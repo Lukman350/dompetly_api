@@ -3,5 +3,5 @@ mp:
     verify:
       algorithm: HS256
       secret: vYpTUwfoXuy2bQ5Dqy8nVOB9CzvZFQndgi4h3vbr/UI=
-      issuer: Dompetly App
+      issuer: https://dompetly.lukmann.dev
       publickey.location: none

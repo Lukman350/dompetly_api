@@ -24,3 +24,6 @@ quarkus:
       generation: none
     log:
       sql: false
+  swagger-ui:
+    enable: true
+    always-include: true
