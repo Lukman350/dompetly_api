@@ -27,6 +27,8 @@ quarkus:
   swagger-ui:
     enable: true
     always-include: true
-    path: /q/swagger-ui
+    path: /api/q/swagger-ui
   smallrye-openapi:
-    path: /q/openapi
+    path: /api/q/openapi
+    servers:
+      - url: /api
