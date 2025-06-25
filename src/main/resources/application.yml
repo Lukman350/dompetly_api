@@ -1,13 +1,14 @@
 quarkus:
   http:
+    root-path: /api
     port: 8080
     auth:
       permission:
         authenticated:
-          paths: /api/authenticated/*
+          paths: /authenticated/*
           policy: authenticated
         public:
-          paths: /api/auth/*
+          paths: /auth/*
           policy: permit
   datasource:
     db-kind: postgresql
@@ -26,3 +27,6 @@ quarkus:
   swagger-ui:
     enable: true
     always-include: true
+    path: /q/swagger-ui
+  smallrye-openapi:
+    path: /q/openapi
