@@ -94,7 +94,6 @@ public class AuthService {
                 .claim("photoProfile", found.getPhotoProfile() == null ? "" : found.getPhotoProfile())
                 .claim("pin", found.getPin() != null ? StringUtil.encodeStringToBase64(found.getPin().toString()) : "")
                 .expiresIn(Duration.ofDays(1))
-                .issuer("Dompetly App")
                 .sign();
 
         found.setToken(token);
