@@ -22,7 +22,7 @@ jobs:
       - name: Build Quarkus application with Maven
         run: |
           chmod +x ./mvnw
-          ./mvnw clean package -Dquarkus.profile=prod
+          ./mvnw clean package -Dquarkus.profile=prod -Dquarkus.swagger-ui.enable=true
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
