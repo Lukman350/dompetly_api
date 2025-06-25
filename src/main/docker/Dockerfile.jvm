@@ -96,9 +96,7 @@ ENV JAVA_OPTS_APPEND="-Dquarkus.http.host=0.0.0.0 \
 -Djava.util.logging.manager=org.jboss.logmanager.LogManager \
 -Dsmallrye.jwt.sign.key.location=file:/etc/dompetly_api/jwt/privateKey.pem \
 -Dsmallrye.jwt.verify.publickey.location=file:/etc/dompetly_api/jwt/publicKey.pem \
--Dsmallrye.jwt.verify.issuer=https://dompetly.lukmann.dev \
--Dquarkus.swagger-ui.enable=true \
--Dquarkus.swagger-ui.always-include=true"
+-Dsmallrye.jwt.verify.issuer=https://dompetly.lukmann.dev"
 ENV JAVA_APP_JAR="/deployments/quarkus-run.jar"
 
 ENTRYPOINT [ "/opt/jboss/container/java/run/run-java.sh" ]
